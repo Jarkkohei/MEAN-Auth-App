@@ -7,7 +7,12 @@ const mongoose = require('mongoose');
 const config = require('./config/database');
 
 //  This replaces the depracated "mongoose.connect(config.database);" -command
-mongoose.createConnection(config.database, { useMongoClient: true });
+//mongoose.createConnection(config.database, { useMongoClient: true });
+
+mongoose.connect(config.database);
+
+
+//mongoose.Promise = global.Promise;
 
 mongoose.connection.on('connected', () => {
     console.log('Connected to database ' + config.database);
