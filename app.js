@@ -6,13 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const config = require('./config/database');
 
-//  This replaces the depracated "mongoose.connect(config.database);" -command
-//mongoose.createConnection(config.database, { useMongoClient: true });
-
 mongoose.connect(config.database);
-
-
-//mongoose.Promise = global.Promise;
 
 mongoose.connection.on('connected', () => {
     console.log('Connected to database ' + config.database);
@@ -37,6 +31,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //  Bodyparser middleware
 app.use(bodyParser.json());
+
+//  Passport Middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+require('./config/passport')(passport);
 
 app.use('/users', users);
 
